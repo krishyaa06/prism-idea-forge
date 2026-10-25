@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+      Prism Idea Forge · AI hackathon idea generator
+      (c) 2026 Prism Protocol · MIT License
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prism Idea Forge · AI Hackathon Idea Generator</title>
+    <meta name="description" content="Generate winning hackathon ideas with AI: problem, solution, features, tech stack, MVP timeline and a 30-second pitch. By Prism Protocol.">
+    <meta name="theme-color" content="#07060f">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%236C63FF'/><stop offset='1' stop-color='%2300D2FF'/></linearGradient></defs><polygon points='50,4 94,27 94,73 50,96 6,73 6,27' fill='url(%23g)'/><text x='50' y='64' font-size='42' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>✦</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+    <canvas id="stars" aria-hidden="true"></canvas>
+
+    <header class="topbar">
+        <a class="logo" href="./">
+            <span class="logo-mark">✦</span>
+            <span>Prism <b>Idea Forge</b></span>
+        </a>
+        <div class="topbar-actions">
+            <span class="mode-pill" id="mode-pill">Demo mode</span>
+            <button class="ghost-btn" id="open-history" aria-label="History">🕘 <span>History</span></button>
+            <button class="ghost-btn" id="open-settings" aria-label="Settings">⚙️ <span>AI Settings</span></button>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <section class="hero">
+            <p class="eyebrow">AI-powered · Built for hackers</p>
+            <h1>Forge your next <span class="gradient-text" id="hero-word">winning</span> hackathon idea</h1>
+            <p class="sub">Describe the theme. Get complete, buildable project concepts with an MVP timeline, tech stack and a 30-second pitch in seconds.</p>
+        </section>
+
+        <form class="forge-card" id="forge-form" autocomplete="off">
+            <div class="field full">
+                <label for="theme">Hackathon theme or problem space</label>
+                <input id="theme" required maxlength="160" placeholder="e.g. Climate action, mental health for students, AI for farmers">
+                <div class="chips" id="theme-chips"></div>
+            </div>
+
+            <div class="field">
+                <label for="track">Track</label>
+                <select id="track">
+                    <option>Open innovation</option>
+                    <option>AI / ML</option>
+                    <option>Web3 / Blockchain</option>
+                    <option>FinTech</option>
+                    <option>HealthTech</option>
+                    <option>EdTech</option>
+                    <option>Sustainability</option>
+                    <option>Developer tools</option>
+                    <option>Social good</option>
+                    <option>Gaming</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="duration">Duration</label>
+                <select id="duration">
+                    <option value="12">12 hours</option>
+                    <option value="24" selected>24 hours</option>
+                    <option value="36">36 hours</option>
+                    <option value="48">48 hours</option>
+                    <option value="168">1 week</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="skill">Team skill level</label>
+                <select id="skill">
+                    <option>Beginner</option>
+                    <option selected>Intermediate</option>
+                    <option>Advanced</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="team">Team size</label>
+                <div class="stepper">
+                    <button type="button" data-step="-1" aria-label="Decrease">−</button>
+                    <input id="team" type="number" min="1" max="6" value="3" readonly>
+                    <button type="button" data-step="1" aria-label="Increase">+</button>
+                </div>
+            </div>
+
+            <div class="field full">
+                <label for="stack">Preferred tech <span class="hint">(optional)</span></label>
+                <input id="stack" maxlength="120" placeholder="e.g. React, Python, Firebase, Discord.js">
+            </div>
+
+            <div class="field full">
+                <label>How many ideas?</label>
+                <div class="segmented" id="count">
+                    <button type="button" data-value="1">1</button>
+                    <button type="button" data-value="2">2</button>
+                    <button type="button" data-value="3" class="active">3</button>
+                </div>
+            </div>
+
+            <button class="forge-btn" type="submit" id="forge-btn">
+                <span class="forge-btn-label">✦ Forge ideas</span>
+                <span class="forge-btn-glow"></span>
+            </button>
+            <p class="kbd-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> to forge</p>
+        </form>
+
+        <section id="loading" class="loading" hidden>
+            <div class="orb"><span></span><span></span><span></span></div>
+            <ul class="log" id="loading-log"></ul>
+        </section>
+
+        <section id="error" class="error-box" hidden></section>
+
+        <section id="results" class="results" hidden>
+            <div class="results-head">
+                <h2>Your ideas</h2>
+                <div class="results-actions">
+                    <button class="ghost-btn" id="copy-all">📋 Copy Markdown</button>
+                    <button class="ghost-btn" id="download-md">⬇️ Download .md</button>
+                    <button class="ghost-btn" id="regenerate">🔄 Regenerate</button>
+                </div>
+            </div>
+            <div class="idea-grid" id="idea-grid"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <span>Made with ✦ by <a href="https://github.com/krishyaa06" target="_blank" rel="noopener">@krishyaa06</a> · <a href="https://dc.gg/prismprotocol" target="_blank" rel="noopener">Prism Protocol</a></span>
+        <span>Your API key never leaves your browser except to call your chosen AI provider.</span>
+    </footer>
+
+    <!-- Settings drawer -->
+    <aside class="drawer" id="settings" aria-hidden="true">
+        <div class="drawer-panel">
+            <div class="drawer-head">
+                <h3>⚙️ AI Settings</h3>
+                <button class="icon-btn" data-close aria-label="Close">✕</button>
+            </div>
+            <label for="provider">Provider</label>
+            <select id="provider"></select>
+            <p class="provider-note" id="provider-note"></p>
+
+            <label for="model">Model</label>
+            <input id="model" placeholder="model id">
+
+            <label for="base-url" id="base-url-label">Base URL</label>
+            <input id="base-url" placeholder="https://.../v1/chat/completions">
+
+            <label for="api-key">API key</label>
+            <div class="key-row">
+                <input id="api-key" type="password" placeholder="Paste your key">
+                <button class="icon-btn" id="toggle-key" type="button" aria-label="Show key">👁</button>
+            </div>
+            <label class="check"><input type="checkbox" id="remember-key" checked> Remember key on this device</label>
+
+            <div class="drawer-actions">
+                <button class="forge-btn small" id="save-settings">Save</button>
+                <button class="ghost-btn" id="clear-key">Use demo mode</button>
+            </div>
+            <p class="privacy">🔒 Keys are stored only in your browser's localStorage. Leave the key empty to use the offline demo generator.</p>
+        </div>
+    </aside>
+
+    <!-- History drawer -->
+    <aside class="drawer" id="history" aria-hidden="true">
+        <div class="drawer-panel">
+            <div class="drawer-head">
+                <h3>🕘 History</h3>
+                <button class="icon-btn" data-close aria-label="Close">✕</button>
+            </div>
+            <ul class="history-list" id="history-list"></ul>
+            <button class="ghost-btn" id="clear-history">Clear history</button>
+        </div>
+    </aside>
+
+    <div class="toast" id="toast" role="status"></div>
+
+    <script src="js/providers.js"></script>
+    <script src="js/demo.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
