@@ -1,0 +1,23 @@
+{
+  "name": "prism-idea-forge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI hackathon idea generator: problem, solution, tech stack, hour-by-hour MVP plan, pitch and README starter. Gemini, Groq, OpenRouter, OpenAI or offline demo mode.",
+  "scripts": {
+    "test": "node --test",
+    "start": "npx --yes serve ."
+  },
+  "author": "Soumya Bhandare (krishyaa06)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krishyaa06/prism-idea-forge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/krishyaa06/prism-idea-forge/issues"
+  },
+  "homepage": "https://krishyaa06.github.io/prism-idea-forge/",
+  "engines": {
+    "node": ">=18"
+  }
+}

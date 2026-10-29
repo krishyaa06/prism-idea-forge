@@ -1,14 +1,21 @@
 # Contributing to prism-idea-forge
 
-Thanks for taking the time to contribute! prism-idea-forge is an in-browser tool by [Prism Protocol](https://github.com/krishyaa06).
+Thanks for taking the time to contribute! prism-idea-forge is an in-browser tool by [Prism Protocol](https://github.com/krishyaa06) — AI hackathon idea generator: problem, solution, tech stack, hour-by-hour MVP plan, pitch and README starter. Gemini, Groq, OpenRouter, OpenAI or offline demo mode.
 
 ## Getting started
 
 ```bash
 git clone https://github.com/krishyaa06/prism-idea-forge.git
 cd prism-idea-forge
-# no build step — open index.html in a browser, or serve the folder:
-npx --yes serve .
+npm start
+```
+
+## Before you open a pull request
+
+Make sure everything passes locally:
+
+```bash
+npm test
 ```
 
 ## Guidelines
